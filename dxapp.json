@@ -1,0 +1,55 @@
+{
+  "name": "RPKM_bedfile",
+  "title": "Make Bedfile for use with RPKM (using conifer)",
+  "summary": "v1.0 Convert bed file into a format that can be used with the RPKM app (using conifer)",
+  "properties": {
+    "github release": "v1.0"
+  },
+  "tags": [
+    "CNV"
+  ],
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name": "bedfile",
+      "label": "bedfile",
+      "help": "The data.bed file generated from mokabed.",
+      "class": "file",
+      "patterns": ["*data.bed"]
+    },
+  {
+      "name": "CNV_control_regions",
+      "label": "CNV control regions",
+      "help": "bed file containing the cnv control regions.",
+      "class": "string",
+      "default": "Version2",
+      "choices": [
+        "Version1",
+        "Version2",
+        "None"
+      ]
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "RPKM_bedfile",
+      "label": "RPKM bedfile",
+      "help": "A bedfile ready to use with the RPKM app combining the control regions and bedfile.",
+      "class": "array:file"
+    }
+  ],
+  "runSpec":  {
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_x2"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  },
+    "access": {
+    "network": [  
+    "*"
+    ]
+  }
+}
