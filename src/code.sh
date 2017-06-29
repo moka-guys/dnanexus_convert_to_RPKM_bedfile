@@ -56,7 +56,7 @@ if [[ $CNV_control_regions ]]
 	done
 else
 	# write to logfile
- 	echo "No CNV control sites to add to bedfile:" >> $logfile	
+ 	echo "No CNV control sites to add to bedfile" >> $logfile	
 fi
 
 #cat ${CNV_control_regions}.txt >> $RPKM_bed
