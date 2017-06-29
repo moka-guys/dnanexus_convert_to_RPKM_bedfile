@@ -40,17 +40,24 @@ echo "awk '{ print \$1\t\$2\t\$3\t\$4 }' $bedfile_path > $RPKM_bed" >> $logfile
 
 # $RPKM_bedfile is the version number. Files for each option,with the extension .txt are in the home dir..
 
-# write to logfile
- echo "Appending CNV control sites to bedfile:" >> $logfile
 
-# loop through any additional bed files to add and append them to the bed file
-for input in /home/dnanexus/in/CNV_control_regions/*; do
-if [ -d "$input" ];  then 
- 	file=$(ls $input)
- 	cat $input/$file >> $RPKM_bed
- 	echo "cat $input/$file >> $RPKM_bed" >> $logfile
- fi
-done
+if [[ $CNV_control_regions ]]
+	then
+	# write to logfile
+ 	echo "Appending CNV control sites to bedfile:" >> $logfile
+
+	# loop through any additional bed files to add and append them to the bed file
+	for input in /home/dnanexus/in/CNV_control_regions/*; do
+	if [ -d "$input" ];  then 
+	 	file=$(ls $input)
+	 	cat $input/$file >> $RPKM_bed
+	 	echo "cat $input/$file >> $RPKM_bed" >> $logfile
+	 fi
+	done
+else
+	# write to logfile
+ 	echo "No CNV control sites to add to bedfile:" >> $logfile	
+fi
 
 #cat ${CNV_control_regions}.txt >> $RPKM_bed
 
