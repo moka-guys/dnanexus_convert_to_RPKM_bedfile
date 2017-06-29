@@ -8,7 +8,7 @@ set -e -x -o pipefail
 #
 # Download inputs
 #
-dx download "$bedfile"
+dx-download-all-inputs  --parallel
 
 # capture the pan number
 to_remove="data.bed"
@@ -25,27 +25,36 @@ mkdir -p /home/dnanexus/out/RPKM_bedfile/
 echo "Creating bedfile for RPKM analysis for $pannum" > $logfile
 
 #remove the header lines
-sed -i '/^#/ d' $bedfile_name
+sed -i '/^#/ d' $bedfile_path
 
 #write to logfile
 echo "Removing header line with command:">> $logfile
-echo "sed -i '/^#/ d' $bedfile_name">> $logfile
+echo "sed -i '/^#/ d' $bedfile_path">> $logfile
 
 #take first 4 columns
-awk '{ print $1"\t"$2"\t"$3"\t"$4 }' $bedfile_name > $RPKM_bed
+awk '{ print $1"\t"$2"\t"$3"\t"$4 }' $bedfile_path > $RPKM_bed
 
 #write to logfile
 echo "Taking first four columns only:">> $logfile
-echo "awk '{ print \$1\t\$2\t\$3\t\$4 }' $bedfile_name > $RPKM_bed" >> $logfile
+echo "awk '{ print \$1\t\$2\t\$3\t\$4 }' $bedfile_path > $RPKM_bed" >> $logfile
 
 # $RPKM_bedfile is the version number. Files for each option,with the extension .txt are in the home dir..
 
-# cat the two files
- cat ${CNV_control_regions}.txt >> $RPKM_bed
+# write to logfile
+ echo "Appending CNV control sites to bedfile:" >> $logfile
 
-#write to logfile
- echo "Appending CNV control sites $CNV_control_regions.txt to bedfile:" >> $logfile
- echo "cat ${CNV_control_regions}.txt >> $RPKM_bed" >> $logfile
+# loop through any additional bed files to add and append them to the bed file
+for input in /home/dnanexus/in/CNV_control_regions/*; do
+if [ -d "$input" ];  then 
+ 	file=$(ls $input)
+ 	cat $input/$file >> $RPKM_bed
+ 	echo "cat $input/$file >> $RPKM_bed" >> $logfile
+ fi
+done
+
+#cat ${CNV_control_regions}.txt >> $RPKM_bed
+
+# echo "cat ${CNV_control_regions}.txt >> $RPKM_bed" >> $logfile
 
 #move files to output
 mv $RPKM_bed /home/dnanexus/out/RPKM_bedfile/$RPKM_bed

@@ -21,13 +21,8 @@
       "name": "CNV_control_regions",
       "label": "CNV control regions",
       "help": "bed file containing the cnv control regions.",
-      "class": "string",
-      "default": "Version2",
-      "choices": [
-        "Version1",
-        "Version2",
-        "None"
-      ]
+      "class": "array:file",
+      "optional": true
     }
   ],
   "outputSpec": [
