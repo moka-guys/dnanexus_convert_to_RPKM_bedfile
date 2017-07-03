@@ -44,7 +44,7 @@ echo "awk '{ print \$1\t\$2\t\$3\t\$4 }' $bedfile_path > $RPKM_bed" >> $logfile
 if [[ $CNV_control_regions ]]
 	then
 	# write to logfile
- 	echo "Appending CNV control sites to bedfile:" >> $logfile
+ 	echo "Appending additional bedfiles to bedfile:" >> $logfile
 
 	# loop through any additional bed files to add and append them to the bed file
 	for input in /home/dnanexus/in/CNV_control_regions/*; do
@@ -56,7 +56,7 @@ if [[ $CNV_control_regions ]]
 	done
 else
 	# write to logfile
- 	echo "No CNV control sites to add to bedfile" >> $logfile	
+ 	echo "No additonal bed files to be added" >> $logfile	
 fi
 
 #cat ${CNV_control_regions}.txt >> $RPKM_bed
