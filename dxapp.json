@@ -1,9 +1,9 @@
 {
   "name": "RPKM_bedfile",
   "title": "Make Bedfile for use with RPKM (using conifer)",
-  "summary": "v1.0 Convert bed file into a format that can be used with the RPKM app (using conifer)",
+  "summary": "v1.1 Convert bed file into a format that can be used with the RPKM app (using conifer)",
   "properties": {
-    "github release": "v1.0"
+    "github release": "v1.1"
   },
   "tags": [
     "CNV"
@@ -39,6 +39,8 @@
         "instanceType": "mem1_ssd1_x2"
       }
     },
+    "distribution" : "Ubuntu",
+    "release" : "14.04",
     "file": "src/code.sh",
     "interpreter": "bash"
   },
